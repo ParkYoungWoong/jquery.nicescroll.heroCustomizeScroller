@@ -1,6 +1,8 @@
 .scroll_area {
-    width: 500px;
-    height: 395px;
+    /*width: 500px;*/
+    /*height: 395px;*/
+    width: 395px;
+    height: 500px;
     overflow: hidden;
 }
 .scroll_area img {

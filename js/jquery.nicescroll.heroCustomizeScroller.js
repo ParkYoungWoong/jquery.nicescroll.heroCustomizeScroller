@@ -2,8 +2,20 @@
     'use strict';
 
     var defaultOptions = {
-        mode: 'horizontal',
-        scrollTarget: '.scroll_area'
+        niceScrollOpts: {  // niceScroll options
+            cursorcolor: "none",
+            cursorwidth: 10,
+            scrollspeed: 60,
+            cursorborderradius: 0,
+            mousescrollstep: 40,
+            background: "none",
+            cursorborder: "none",
+            autohidemode: true,
+            boxzoom: false,
+            zindex: 990
+        },
+        scrollTarget: '.scroll_area',  // scroll area selector
+        mode: 'horizontal'  // 'vertical', 'horizontal'
     };
 
     $.fn.customizeScroller = function (options) {
@@ -27,9 +39,11 @@
         var init = function () {
             s.opts = $.extend({}, defaultOptions, options);
 
+            s.$target = $(s.opts.scrollTarget);
+            $(s.opts.scrollTarget).niceScroll(s.opts.niceScrollOpts);
+
             el.html('<div class="scroller_realbox"><div class="scroller_pointer"></div></div>');
 
-            s.$target = $(s.opts.scrollTarget);
             s.$realbox = $('.scroller_realbox');
             s.$pointer = $('.scroller_pointer');
 
@@ -160,40 +174,8 @@
             s.$pointer.css(result);
         };
 
-        init();
+        $(window).load(init);
         return this;
     }
 
 })(jQuery);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

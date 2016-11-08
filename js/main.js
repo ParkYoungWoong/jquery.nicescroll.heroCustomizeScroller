@@ -1,21 +1,20 @@
-$(window).load(function () {
-
-    $('.scroll_area').niceScroll({
-        cursorcolor: "none",
-        cursorwidth: 10,
-        scrollspeed: 60,
-        cursorborderradius: 0,
-        mousescrollstep: 40,
-        background: "none",
-        cursorborder: "none",
-        autohidemode: true,
-        boxzoom: false,
-        zindex: 990
-    });
+$(function () {
 
     $('.scroll_box').customizeScroller({
-        mode: 'vertical',
-        scrollTarget: '.scroll_area'
+        niceScrollOpts: {
+            cursorcolor: "none",
+            cursorwidth: 10,
+            scrollspeed: 60,
+            cursorborderradius: 0,
+            mousescrollstep: 40,
+            background: "none",
+            cursorborder: "none",
+            autohidemode: true,
+            boxzoom: false,
+            zindex: 990
+        },
+        scrollTarget: '.scroll_area',
+        mode: 'vertical'
     });
 
 });
