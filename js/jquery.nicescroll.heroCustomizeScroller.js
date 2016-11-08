@@ -1,10 +1,3 @@
-$(window).load(function () {
-    $('.scroll_box').customizeScroller({
-        mode: 'vertical',
-        scrollTarget: '.scroll_area'
-    });
-});
-
 ;(function ($) {
     'use strict';
 
