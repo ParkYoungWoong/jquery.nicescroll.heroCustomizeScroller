@@ -174,6 +174,14 @@
             s.$pointer.css(result);
         };
 
+        el.prevScroll = function () {
+
+        };
+
+        el.nextScroll = function () {
+
+        };
+
         $(window).load(init);
         return this;
     }
