@@ -13,9 +13,10 @@
             autohidemode: true,
             boxzoom: false,
             zindex: 990
-        },
-        scrollTarget: '.scroll_area',  // scroll area selector
-        mode: 'horizontal'  // 'vertical', 'horizontal'
+        }
+        , scrollTarget: '.scroll_area'  // scroll area selector
+        , mode: 'horizontal'  // 'vertical', 'horizontal'
+        , btnClickDistance: 10  // percent(%)
     };
 
     $.fn.customizeScroller = function (options) {
@@ -47,6 +48,8 @@
             s.$realbox = $('.scroller_realbox');
             s.$pointer = $('.scroller_pointer');
 
+            s.currentScrollPos = 0;
+
             if (s.opts.mode === 'horizontal') {
                 s.targetScrollMax = s.$target.getNiceScroll(0).getContentSize().w - s.$target.width();
                 s.startRange = s.$realbox.offset().left;
@@ -76,6 +79,7 @@
             pointerEvent();
             targetScroll();
             documentMouseUp();
+            clickScrollBar();
         };
 
         var pointerEvent = function () {
@@ -97,9 +101,7 @@
             $(document).on({
                 mousemove: function (event) {
                     if (s.doScrolling) {
-                        s.pagePos = s.opts.mode === 'horizontal' ? event.pageX : event.pageY;
-
-                        setPointer();
+                        setPointer(event);
                         event.preventDefault();
                     }
                 }
@@ -123,6 +125,8 @@
             var result = null;
             var pointerPos = null;
 
+            s.pagePos = s.opts.mode === 'horizontal' ? event.pageX : event.pageY;
+
             if (s.pagePos >= s.startRange && s.pagePos <= s.endRange) {
 
                 pointerPos = s.pagePos - s.pointerHalfLength;
@@ -145,17 +149,23 @@
             }
         };
 
+        var setScrollArea = function (value) {
+            console.log(value);
+
+            if (s.opts.mode === 'horizontal') {
+                s.$target.getNiceScroll(0).doScrollLeft(value, 0);
+            } else {
+                s.$target.getNiceScroll(0).doScrollTop(value, 0);
+            }
+        };
+
         var setScrollBar = function () {
             var direction = s.opts.mode === 'horizontal' ? 'left' : 'top';
 
             s.scrollBarPosPercent = parseInt(s.$pointer.css(direction)) * 100 / s.realboxLength;
             s.scrollAreaScrollPos = s.targetScrollMax / 100 * s.scrollBarPosPercent;
 
-            if (s.opts.mode === 'horizontal') {
-                s.$target.getNiceScroll(0).doScrollLeft(s.scrollAreaScrollPos, 0);
-            } else {
-                s.$target.getNiceScroll(0).doScrollTop(s.scrollAreaScrollPos, 0);
-            }
+            setScrollArea(s.scrollAreaScrollPos);
         };
 
         var targetScroll = function () {
@@ -174,12 +184,24 @@
             s.$pointer.css(result);
         };
 
-        el.prevScroll = function () {
+        var clickScrollBar = function () {
+            s.$realbox.on({
+                click: function (event) {
+                    setPointer(event);
+                }
+            });
+        };
 
+        el.prevScroll = function () {
+            var moveDistance = s.currentScrollPos - s.targetScrollMax / 100 * s.opts.btnClickDistance;
+
+            setScrollArea(moveDistance);
         };
 
         el.nextScroll = function () {
+            var moveDistance = s.currentScrollPos + s.targetScrollMax / 100 * s.opts.btnClickDistance;
 
+            setScrollArea(moveDistance);
         };
 
         $(window).load(init);

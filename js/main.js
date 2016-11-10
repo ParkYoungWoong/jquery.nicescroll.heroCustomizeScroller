@@ -1,6 +1,6 @@
 $(function () {
 
-    $('.scroll_box').customizeScroller({
+    var scroll = $('.scroll_box').customizeScroller({
         niceScrollOpts: {
             cursorcolor: "none",
             cursorwidth: 10,
@@ -14,7 +14,15 @@ $(function () {
             zindex: 990
         },
         scrollTarget: '.scroll_area',
-        mode: 'vertical'
+        mode: 'horizontal',
+        btnClickDistance: 10
+    });
+
+    $('.prev').on('click', function () {
+        scroll.prevScroll();
+    });
+    $('.next').on('click', function () {
+        scroll.nextScroll();
     });
 
 });
