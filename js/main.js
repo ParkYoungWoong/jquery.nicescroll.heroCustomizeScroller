@@ -15,14 +15,10 @@ $(function () {
         },
         scrollTarget: '.scroll_area',
         mode: 'horizontal',
-        btnClickDistance: 10
+        btnClickDistance: 7
     });
 
-    $('.prev').on('click', function () {
-        scroll.prevScroll();
-    });
-    $('.next').on('click', function () {
-        scroll.nextScroll();
-    });
+    $('.prev').on({ click: scroll.prevScroll });
+    $('.next').on({ click: scroll.nextScroll });
 
 });

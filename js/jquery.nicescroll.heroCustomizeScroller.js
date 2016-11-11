@@ -16,7 +16,7 @@
         }
         , scrollTarget: '.scroll_area'  // scroll area selector
         , mode: 'horizontal'  // 'vertical', 'horizontal'
-        , btnClickDistance: 10  // percent(%)
+        , btnClickDistance: 7  // percent(%)
     };
 
     $.fn.customizeScroller = function (options) {
