@@ -1,4 +1,4 @@
-$(function () {
+$(window).load(function () {
 
     var scroll = $('.scroll_box').customizeScroller({
         niceScrollOpts: {

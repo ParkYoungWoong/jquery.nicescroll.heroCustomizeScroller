@@ -45,8 +45,8 @@
 
             el.html('<div class="scroller_realbox"><div class="scroller_pointer"></div></div>');
 
-            s.$realbox = $('.scroller_realbox');
-            s.$pointer = $('.scroller_pointer');
+            s.$realbox = el.find('.scroller_realbox');
+            s.$pointer = el.find('.scroller_pointer');
 
             s.currentScrollPos = 0;
 
@@ -59,8 +59,6 @@
                 s.pointerHalfLength = s.pointerLength / 2;
             } else {
                 s.targetScrollMax = s.$target.getNiceScroll(0).getContentSize().h - s.$target.height();
-                console.log(s.$target.getNiceScroll(0).getContentSize().h);
-                console.log(s.$target.height());
                 s.startRange = s.$realbox.offset().top;
                 s.endRange = s.startRange + s.$realbox.height();
                 s.realboxLength = s.$realbox.height();
@@ -204,7 +202,27 @@
             setScrollArea(moveDistance);
         };
 
-        $(window).load(init);
+
+        function addLoadEvent(func) {   // 중복 로드 처리
+            var oldonload = window.onload;
+            if (typeof window.onload != 'function') {
+                if (document.all && !document.querySelector) {
+                    window.onload = func;
+                } else {
+                    window.onload = func();
+                }
+            } else {
+                window.onload = function() {
+                    if (oldonload) {
+                        oldonload();
+                    }
+                    func();
+                }
+            }
+        }
+
+        addLoadEvent(init);
+
         return this;
     }
 
